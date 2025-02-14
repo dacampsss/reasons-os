@@ -38,7 +38,8 @@ modules:
       - flatseal # Reason=I trust Fedora QA more for this system-wide solutions
       - menulibre # Reason=Flatpak is unmaintained+it deals with system-wide files
       - QDiskInfo
-      - adw-gtk3-theme
+      - adw-gtk3-theme # Reason=uniform looking for gtk3 apps.
+      - vlc # Reason=flatpak is unverified.
     # remove:
     #  - firefox
     #  - firefox-langpacks
@@ -96,8 +97,6 @@ modules:
         - page.tesk.Refine # Reason=better support for flatpak
         - org.freedesktop.Platform.VulkanLayer.MangoHud # Reason=nice for diagnosing and temperature control
         - org.freedesktop.Platform.VulkanLayer.gamescope # Reason=a lot of features for gaming
-        - org.gtk.Gtk3theme.adw-gtk3 # Reason=Uniform looking. new Adwaita for old gtk3 programs
-        - org.gtk.Gtk3theme.adw-gtk3-dark
       remove:
         - org.gnome.eog # Reason=older
         - org.gnome.Connections # Reason=I don't need it+not the most advanced vnc client
