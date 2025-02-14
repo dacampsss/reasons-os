@@ -46,7 +46,6 @@ modules:
     
   - type: script
     snippets:
-      - "systemctl enable Sunshine"
       - "systemctl enable lactd"
       - "rm -rf /usr/share/applications/org.mozilla.firefox.desktop" # Reason=hide default firefox
       
