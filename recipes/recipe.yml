@@ -1,13 +1,11 @@
 ---
 # yaml-language-server: $schema=https://schema.blue-build.org/recipe-v1.json
-# image will be published to ghcr.io/<user>/<name>
-name: reasons-os
-# description will be included in the image's metadata
-description: This is my personal OS image.
 
-# the base image to build on top of (FROM) and the version tag to use
+name: reasons-os
+description: Just another personal Fedora image. With reasons.
+
 base-image: ghcr.io/ublue-os/silverblue-main
-image-version: 41 # latest is also supported if you want new updates ASAP
+image-version: latest
 
 # module configuration, executed in order
 # you can include multiple instances of the same module
@@ -16,29 +14,90 @@ modules:
     files:
       - source: system
         destination: / # copies files/system/* (* means everything inside it) into your image's root folder /
+# Reasons:
+# - amdgpu undervolt unlock
+# - some pipewire settings for better resampling and a bigger buffer ("quantum") for my ancient hardware
 
   - type: rpm-ostree
     repos:
-      - https://copr.fedorainfracloud.org/coprs/atim/starship/repo/fedora-%OS_VERSION%/atim-starship-fedora-%OS_VERSION%.repo
+      - https://copr.fedorainfracloud.org/coprs/lizardbyte/stable/repo/fedora-%OS_VERSION%/lizardbyte-stable-fedora-%OS_VERSION%.repo # Reason=I like stream computing/gaming
+      - https://copr.fedorainfracloud.org/coprs/ilyaz/LACT/repo/fedora-%OS_VERSION%/ilyaz-LACT-fedora-%OS_VERSION%.repo # Reason=Controlling amdgpu voltage and clocks
+      - https://copr.fedorainfracloud.org/coprs/birkch/QDiskInfo/repo/fedora-%OS_VERSION%/birkch-QDiskInfo-fedora-%OS_VERSION%.repo # Reason=to check ssd health
     install:
-      - micro
-      - starship
-    remove:
-      # example: removing firefox (in favor of the flatpak)
-      # "firefox" is the main package, "firefox-langpacks" is a dependency
-      - firefox
-      - firefox-langpacks # also remove firefox dependency (not required for all packages, this is a special case)
-
+      - python3-icoextract # Reason=exe thumbs
+      - libvirt
+      - libvirt-client
+      - libvirt-nss
+      - virt-manager # Reason=better than vbox
+      - smartmontools # Reason=keep ssd healthy
+      - samba-winbind # Reason=I need ABBYY Finereader
+      - waydroid # Reason=appssss and I have enough RAM
+      - dconf-editor
+      - gnome-tweaks
+      - Sunshine
+      - lact
+      - flatseal # Reason=I trust Fedora QA more for this system-wide solutions
+      - menulibre # Reason=Flatpak is unmaintained+it deals with system-wide files
+      - QDiskInfo
+    # remove:
+    #  - firefox
+    #  - firefox-langpacks
+    # reason: possible stability issues as I've heard it happened before. better to just hide Firefox.
+    
+  - type: script
+    snippets:
+      - "systemctl enable Sunshine"
+      - "systemctl enable lactd"
+      - "rm -rf /usr/share/applications/org.mozilla.firefox.desktop" # Reason=hide default firefox
+      
+  - type: initramfs # Reason=amdgpu unlock
+      
   - type: default-flatpaks
-    notify: true # Send notification after install/uninstall is finished (true/false)
+    notify: true # Send notification after install/uninstall
     system:
-      # If no repo information is specified, Flathub will be used by default
+      # If no repo information is specified, Flathub
       install:
-        - org.mozilla.firefox
-        - org.gnome.Loupe
+        - org.mozilla.firefox # Reason=codecs
+        - dev.qwery.AddWater # Reason=gnomed firefox!
+        - org.gnome.Loupe # Reason=newer
+        - com.mattjakeman.ExtensionManager # Reason=gnome but more complete
+        - com.obsproject.Studio # Reason=codecs+I like to record sometimes
+        - com.obsproject.Studio.Plugin.GStreamerVaapi
+        - com.obsproject.Studio.Plugin.Gstreamer
+        - com.obsproject.Studio.Plugin.OBSVkCapture
+        - com.valvesoftware.Steam # Reason=gaming
+        - com.valvesoftware.Steam.CompatibilityTool.Proton-GE # Reason=gaming with slightly better support
+        - com.valvesoftware.Steam.Utility.InhibitScreensaver
+        - io.github.Foldex.AdwSteamGtk # Reason=gnomed steam!
+        - io.github.peazip.PeaZip # Reason=great and exclusive compression algorithms
+        - io.github.peazip.PeaZip.Addon.i386
+        - net.davidotek.pupgui2 # Reason=simple and nice addition for Lutris, Steam etc! protonup-qt
+        - net.lutris.Lutris # Reason=essential for gaming. I don't see the need for Bottles, likewise. to keep Windows programs sandboxed is just a nice thing!
+        - org.chromium.Chromium # Reason=just in case a specific web service got broken on FF
+        - org.chromium.Chromium.Codecs
+        - com.github.wwmm.easyeffects # Reason=nice to diagnose and filter Pipewire sound
+        - org.flameshot.Flameshot # Reason=better than gnome screenshot app
+        - org.kde.krita # Reason=for specific document formats. more features than gnome's default
+        - org.libreoffice.LibreOffice # Reason=essential for a student.
+        - org.libretro.RetroArch # Reason=retro gaming, and it's full compatible with retroachievements and lutris.
+        - org.qbittorrent.qBittorrent # Reason=the better torrent client for Linux out there
+        - org.telegram.desktop # Reason=I use it
+        - com.rtosta.zapzap # Reason=I use it too
+        - com.spotify.Client # Reason=pity on me I'm a slave for these corporations...
+        - org.videolan.VLC # Reason=still the best video player. VLSubs is just nice.
+        - org.zotero.Zotero # Reason=student's quality of life.
+        - org.yuzu_emu.yuzu # Reason=still the best Switch emulator.
+        - org.freedesktop.Platform.VulkanLayer.MangoHud # Reason=nice for diagnosing and temperature control
+        - org.kde.KStyle.Adwaita # Reason=Uniform looking. Adwaita for qt programs
+        - org.gtk.Gtk3theme.adw-gtk3 # Reason=Uniform looking. new Adwaita for old gtk3 programs
+        - org.gtk.Gtk3theme.adw-gtk3-dark
       remove:
-        - org.gnome.eog
-    user: {} # Also add Flathub user repo, but no user packages
+        - org.gnome.eog # Reason=older
+        - org.gnome.Connections # Reason=I don't need it+not the most advanced vnc client
+        - org.gnome.Contacts # Reason=I don't need it (yet)
+        - org.gnome.Extensions # Reason=Extension Manager is just better (yet), unfortunately
+        - org.gnome.FileRoller # Reason=deprecated, unfortunately. peazip (or builtin nautilus compression) is better now
+        
+    # user: {} Also add Flathub user repo, but no user packages
 
   - type: signing # this sets up the proper policy & signing files for signed images to work fully
-
