@@ -95,7 +95,6 @@ modules:
         - org.yuzu_emu.yuzu # Reason=still the best Switch emulator.
         - org.freedesktop.Platform.VulkanLayer.MangoHud # Reason=nice for diagnosing and temperature control
         - org.freedesktop.Platform.VulkanLayer.gamescope # Reason=a lot of features for gaming
-        - org.kde.KStyle.Adwaita # Reason=Uniform looking. Adwaita for qt programs
         - org.gtk.Gtk3theme.adw-gtk3 # Reason=Uniform looking. new Adwaita for old gtk3 programs
         - org.gtk.Gtk3theme.adw-gtk3-dark
         - page.tesk.Refine # Reason=better support for flatpak
