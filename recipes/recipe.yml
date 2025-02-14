@@ -73,7 +73,6 @@ modules:
         - net.davidotek.pupgui2 # Reason=simple and nice addition for Lutris, Steam etc! protonup-qt
         - net.lutris.Lutris # Reason=essential for gaming. I don't see the need for Bottles, likewise. to keep Windows programs sandboxed is just a nice thing!
         - org.chromium.Chromium # Reason=just in case a specific web service got broken on FF
-        - org.chromium.Chromium.Codecs
         - com.github.wwmm.easyeffects # Reason=nice to diagnose and filter Pipewire sound
         - org.flameshot.Flameshot # Reason=better than gnome screenshot app
         - org.kde.krita # Reason=for specific document formats. more features than gnome's default
