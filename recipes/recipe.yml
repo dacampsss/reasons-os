@@ -33,12 +33,12 @@ modules:
       - samba-winbind # Reason=I need ABBYY Finereader
       - waydroid # Reason=appssss and I have enough RAM
       - dconf-editor
-      - gnome-tweaks
       - Sunshine
       - lact
       - flatseal # Reason=I trust Fedora QA more for this system-wide solutions
       - menulibre # Reason=Flatpak is unmaintained+it deals with system-wide files
       - QDiskInfo
+      - adw-gtk3-theme
     # remove:
     #  - firefox
     #  - firefox-langpacks
@@ -56,9 +56,17 @@ modules:
     system:
       # If no repo information is specified, Flathub
       install:
+        - org.gnome.Loupe
+        - org.gnome.Characters
+        - org.gnome.font-viewer
+        - org.gnome.Calendar
+        - org.gnome.Calculator
+        - org.gnome.Weather
+        - org.gnome.baobab
+        - org.gnome.TextEditor
+        - org.gnome.Evince # Reason=added those programs above cause I didn't know this image is really minimal, and I like those GNOME Core apps. waiting for Fedora Flatpak's support, as I think it may be the better of both worlds, rpm and flatpak, for this kind of app.
         - org.mozilla.firefox # Reason=codecs
         - dev.qwery.AddWater # Reason=gnomed firefox!
-        - org.gnome.Loupe # Reason=newer
         - com.mattjakeman.ExtensionManager # Reason=gnome but more complete
         - com.obsproject.Studio # Reason=codecs+I like to record sometimes
         - com.obsproject.Studio.Plugin.GStreamerVaapi
@@ -75,7 +83,7 @@ modules:
         - org.chromium.Chromium # Reason=just in case a specific web service got broken on FF
         - com.github.wwmm.easyeffects # Reason=nice to diagnose and filter Pipewire sound
         - org.flameshot.Flameshot # Reason=better than gnome screenshot app
-        - org.kde.krita # Reason=for specific document formats. more features than gnome's default
+        - org.kde.okular # Reason=for specific document formats. more features than gnome's default
         - org.libreoffice.LibreOffice # Reason=essential for a student.
         - org.libretro.RetroArch # Reason=retro gaming, and it's full compatible with retroachievements and lutris.
         - org.qbittorrent.qBittorrent # Reason=the better torrent client for Linux out there
@@ -86,9 +94,11 @@ modules:
         - org.zotero.Zotero # Reason=student's quality of life.
         - org.yuzu_emu.yuzu # Reason=still the best Switch emulator.
         - org.freedesktop.Platform.VulkanLayer.MangoHud # Reason=nice for diagnosing and temperature control
+        - org.freedesktop.Platform.VulkanLayer.gamescope # Reason=a lot of features for gaming
         - org.kde.KStyle.Adwaita # Reason=Uniform looking. Adwaita for qt programs
         - org.gtk.Gtk3theme.adw-gtk3 # Reason=Uniform looking. new Adwaita for old gtk3 programs
         - org.gtk.Gtk3theme.adw-gtk3-dark
+        - page.tesk.Refine # Reason=better support for flatpak
       remove:
         - org.gnome.eog # Reason=older
         - org.gnome.Connections # Reason=I don't need it+not the most advanced vnc client
